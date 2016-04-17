@@ -90,6 +90,8 @@ public class Contact {
                 ", secondName='" + secondName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneMobile='" + phoneMobile + '\'' +
+                ", phoneHome='" + phoneHome + '\'' +
+                ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

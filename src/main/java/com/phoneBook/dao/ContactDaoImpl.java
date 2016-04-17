@@ -18,9 +18,14 @@ public class ContactDaoImpl implements ContactDao {
     @Autowired
     private DataConnection dataConnection;
     private final String GET_USER_CONTACTS = "SELECT * FROM contact WHERE id IN (SELECT id FROM contact WHERE contact.user_id=?)";
-    private final String ADD_NEW_CONTACT = "INSERT INTO contact WHERE id = ?)";
+    private final String ADD_NEW_CONTACT = "INSERT INTO contact(firstName, secondName, lastName, phoneMobile, phoneHome, " +
+            "address, email, user_id) VALUES (?,?,?,?,?,?,?,?)";
     private final String SELECT_CONTACT_BY_ID = "SELECT * FROM CONTACT WHERE id = ?";
-    private final String DELETE_CONTACT_BY_ID = "DELETE * FROM CONTACT WHERE id = ?";
+    private final String DELETE_CONTACT_BY_ID = "DELETE FROM CONTACT WHERE id = ?";
+    private final String UPDATE_CONTACT_BY_ID = "UPDATE contact SET firstName = ?, secondName = ?, lastName = ?, phoneMobile = ?," +
+            " phoneHome = ?, address = ?, email = ? WHERE id =";
+//    UPDATE userdb SET fname = ?, mail = ? WHERE username = ?;
+
 
     public List<Contact> getAll(int userId) {
         List<Contact> contactList = new ArrayList<Contact>();
@@ -64,17 +69,38 @@ public class ContactDaoImpl implements ContactDao {
         }
     }
 
-    public void add(Contact contact) {
+    public void add(Contact contact, int userId) {
         try (Connection connection = dataConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_NEW_CONTACT);) {
-            preparedStatement.setInt(1, contact.getId());
+            preparedStatement.setString(1, contact.getFirstName());
+            preparedStatement.setString(2, contact.getSecondName());
+            preparedStatement.setString(3, contact.getLastName());
+            preparedStatement.setString(4, contact.getPhoneMobile());
+            preparedStatement.setString(5, contact.getPhoneHome());
+            preparedStatement.setString(6, contact.getAddress());
+            preparedStatement.setString(7, contact.getEmail());
+            preparedStatement.setInt(8, userId);
             preparedStatement.execute();
+
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void edit(Contact contact) {
+        try (Connection connection = dataConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CONTACT_BY_ID + contact.getId());) {
+            preparedStatement.setString(1, contact.getFirstName());
+            preparedStatement.setString(2, contact.getSecondName());
+            preparedStatement.setString(3, contact.getLastName());
+            preparedStatement.setString(4, contact.getPhoneMobile());
+            preparedStatement.setString(5, contact.getPhoneHome());
+            preparedStatement.setString(6, contact.getAddress());
+            preparedStatement.setString(7, contact.getEmail());
+            preparedStatement.execute();
 
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

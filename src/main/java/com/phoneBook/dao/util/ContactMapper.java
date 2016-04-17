@@ -11,6 +11,7 @@ public class ContactMapper {
     public static Contact map(ResultSet resultSet) {
         Contact contact = new Contact();
         try {
+            contact.setId(resultSet.getInt("id"));
             contact.setFirstName(resultSet.getString("firstName"));
             contact.setSecondName(resultSet.getString("secondName"));
             contact.setLastName(resultSet.getString("lastName"));

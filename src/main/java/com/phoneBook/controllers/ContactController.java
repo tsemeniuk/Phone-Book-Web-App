@@ -5,11 +5,7 @@ import com.phoneBook.service.ContactServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.sql.SQLException;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ContactController {
@@ -17,58 +13,36 @@ public class ContactController {
     private ContactServiceImpl contactService;
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    public String addPage(@ModelAttribute("contact") Contact contact) {
         return "add";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@RequestParam("firstName") String firstName,
-                      @RequestParam("secondName") String secondName,
-                      @RequestParam("lastName") String lastName,
-                      @RequestParam("phoneMobile") String phoneMobile,
-                      @RequestParam("phoneHome") String phoneHome,
-                      @RequestParam("address") String address,
-                      @RequestParam("email") String email,
-                      Model model
-    ) throws SQLException, ClassNotFoundException {
-
-        Contact contact = new Contact();
-        contact.setFirstName(firstName);
-        contact.setSecondName(secondName);
-        contact.setLastName(lastName);
-        contact.setPhoneMobile(phoneMobile);
-        contact.setPhoneHome(phoneHome);
-        contact.setAddress(address);
-        contact.setEmail(email);
-        contactService.add(contact);
+    public String add(@ModelAttribute("contact") Contact contact) {
+//        @RequestParam("userId") int userId
+        int userId = 1;
+        contactService.add(contact, userId);
 
         System.out.println("ADD CONTACT ");
         System.out.println(contact);
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit(@RequestParam("id") int id,
-                       @RequestParam("firstName") String firstName,
-                       @RequestParam("secondName") String secondName,
-                       @RequestParam("lastName") String lastName,
-                       @RequestParam("phoneMobile") String phoneMobile,
-                       @RequestParam("phoneHome") String phoneHome,
-                       @RequestParam("address") String address,
-                       @RequestParam("email") String email) {
-        Contact contact = contactService.get(id);
-        contact.setFirstName(firstName);
-        contact.setSecondName(secondName);
-        contact.setLastName(lastName);
-        contact.setPhoneMobile(phoneMobile);
-        contact.setPhoneHome(phoneHome);
-        contact.setAddress(address);
-        contact.setEmail(email);
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable int id, Model model) {
+        model.addAttribute("contact", contactService.get(id));
+        return "edit";
+    }
+
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String edit(@ModelAttribute("contact") Contact contact, @PathVariable int id) {
+        contact.setId(id);
         contactService.edit(contact);
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@RequestParam("id") int id) {
         contactService.delete(id);
         return "redirect:/";

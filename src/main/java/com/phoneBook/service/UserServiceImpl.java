@@ -6,8 +6,6 @@ import com.phoneBook.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -16,7 +14,7 @@ public class UserServiceImpl implements UserService {
     private ContactDaoImpl contactDao;
 
 
-    public User get(int i) throws SQLException, ClassNotFoundException {
+    public User get(int i){
         User user = userDao.get(i);
         user.setContacts(contactDao.getAll(i));
         return user;

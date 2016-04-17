@@ -18,7 +18,7 @@ public class UserDaoImpl implements UserDao {
     private final String SELECT_USER_BY_ID = "SELECT * FROM USER WHERE id = ?";
     private final String ADD_NEW_USER = "INSERT INTO USER WHERE id = ?";
 
-    public User get(int userId) throws SQLException, ClassNotFoundException {
+    public User get(int userId) {
         try (java.sql.Connection connection = dataConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
 
@@ -27,6 +27,8 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = preparedStatement.getResultSet();
             resultSet.next();
             return UserMapper.map(resultSet);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

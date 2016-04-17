@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
     <title>Home</title>
-    <jsp:include page="head-include.jsp"/>
+    <jsp:include page="header.jsp"/>
 </head>
 
 <body>

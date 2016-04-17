@@ -12,7 +12,7 @@ public interface ContactService {
 
     public void delete(int i);
 
-    public void add(Contact contact);
+    public void add(Contact contact, int userId);
 
     public void edit(Contact contact);
 }

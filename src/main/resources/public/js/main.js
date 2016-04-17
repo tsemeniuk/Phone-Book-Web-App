@@ -44,18 +44,23 @@ $(document).ready(function () {
         });
     });
 
-    $('#deleteContact').click(function () {
-        $.ajax({
-            type: 'DELETE',
-            url: '/delete',
-            dataType: 'html',
-            data: {
-                id: $("#id").val(),
-            },
-            success: function (res, status, xhr) {
-                //alert(xhr.getResponseHeader("info"));
-                window.location.href = '/';
-            }
-        });
-    });
+
+
+    //$('#deleteContact').click(function () {
+    //    $.ajax({
+    //        type: 'DELETE',
+    //        url: '/delete',
+    //        dataType: 'html',
+    //        data: {
+    //            id: $("#id").val(),
+    //        },
+    //        success: function (res, status, xhr) {
+    //            //alert(xhr.getResponseHeader("info"));
+    //            window.location.href = '/';
+    //        }
+    //    });
+    //});
 });
+
+
+

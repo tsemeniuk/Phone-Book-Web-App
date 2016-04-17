@@ -4,6 +4,7 @@ article, aside, details, figcaption, figure, footer, header, menu, nav, section 
 
 body {
     font: 12px verdana, sans-serif;
+    background-color: rgba(232, 232, 232, 0.27);
 }
 
 a {
@@ -15,6 +16,35 @@ a:hover,a:focus {
     outline: none;
 }
 
+.h3, h3 {
+    font-size: 24px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*====================================*/
 ul {
     margin: 0;
     padding: 0;
@@ -83,8 +113,9 @@ input.form-control {
 }
 
 .sort {
-    padding-top: 20px;
-    min-height: 75px !important;
+    /*padding-top: 10px;*/
+    /*min-height: 15px;*/
+    margin: auto;
 }
 
 .navbar-nav {

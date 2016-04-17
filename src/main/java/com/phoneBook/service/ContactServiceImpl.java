@@ -6,7 +6,6 @@ import com.phoneBook.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -17,7 +16,7 @@ public class ContactServiceImpl implements ContactService {
 //    @Autowired
 //    private ContactRepository contactRepository;
 
-    public List<Contact> getAll(int userId) throws SQLException, ClassNotFoundException {
+    public List<Contact> getAll(int userId) {
         return contactDao.getAll(userId);
     }
 
@@ -29,8 +28,8 @@ public class ContactServiceImpl implements ContactService {
         contactDao.delete(userId);
     }
 
-    public void add(Contact contact) {
-//        contactDao.add(contact);
+    public void add(Contact contact, int userId) {
+        contactDao.add(contact, userId);
     }
 
     public void edit(Contact contact) {

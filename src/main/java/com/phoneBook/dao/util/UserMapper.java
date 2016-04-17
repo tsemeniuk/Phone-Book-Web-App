@@ -11,6 +11,7 @@ public class UserMapper {
     public static User map(ResultSet resultSet) {
         User user = new User();
         try {
+            user.setId(resultSet.getInt("id"));
             user.setFirstName(resultSet.getString("firstName"));
             user.setSecondName(resultSet.getString("secondName"));
             user.setLastName(resultSet.getString("lastName"));
