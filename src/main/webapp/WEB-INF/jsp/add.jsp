@@ -14,8 +14,8 @@
 
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link media="all" rel="stylesheet" href="/css/style.css" type="text/css"/>
-    <link rel="icon" type="image/png" href="/img/salesa.png"/>
-    <link rel="apple-touch-icon" href="/img/salesa.png"/>
+    <link rel="icon" type="image/png" href="/img/icon.png"/>
+    <link rel="apple-touch-icon" href="/img/icon.png"/>
     <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/feedback.js"></script>--%>

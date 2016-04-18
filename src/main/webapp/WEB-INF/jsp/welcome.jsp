@@ -13,12 +13,6 @@
     <%--<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>--%>
 </head>
 <body>
-<div class="container">
-    <div class="table">
-        Приветствую тебя <h4>${user.firstName}</h4>
-        <a href="/">Sign Out</a>
-    </div>
-</div>
 
 <div id="contacts" class="container">
     <div class="row">

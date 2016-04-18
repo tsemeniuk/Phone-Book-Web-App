@@ -10,12 +10,33 @@ public class User {
     @Id
     @GeneratedValue
     private Integer id;
-    private String login;
+    private String username;
     private String password;
     private String firstName;
     private String secondName;
     private String lastName;
+    private Boolean enabled;
     private List<Contact> contacts;
+
+    public User() {
+    }
+
+    public User(String username, String password, String firstName, String secondName, String lastName, List<Contact> contacts) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.lastName = lastName;
+        this.contacts = contacts;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public List<Contact> getContacts() {
         return contacts;
@@ -33,12 +54,12 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -77,7 +98,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", login='" + login + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
@@ -85,4 +106,6 @@ public class User {
                 ", contacts=" + contacts +
                 '}';
     }
+
+
 }

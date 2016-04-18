@@ -15,7 +15,7 @@ public class UserMapper {
             user.setFirstName(resultSet.getString("firstName"));
             user.setSecondName(resultSet.getString("secondName"));
             user.setLastName(resultSet.getString("lastName"));
-            user.setLogin(resultSet.getString("login"));
+            user.setUsername(resultSet.getString("login"));
             user.setPassword(resultSet.getString("password"));
         } catch (SQLException e) {
             throw new RuntimeException(e);

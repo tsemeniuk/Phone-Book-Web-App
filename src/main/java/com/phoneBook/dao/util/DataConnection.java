@@ -17,7 +17,7 @@ public class DataConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(dbURL, "root", "root");
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

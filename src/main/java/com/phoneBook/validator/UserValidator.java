@@ -23,7 +23,7 @@
 //        User user = (User) o;
 //
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-//        if (user.getLogin().length() < 4 || user.getLogin().length() > 32) {
+//        if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
 //            errors.rejectValue("username", "Size.userForm.username");
 //        }
 //        if (userService.findByUsername(user.getUsername()) != null) {

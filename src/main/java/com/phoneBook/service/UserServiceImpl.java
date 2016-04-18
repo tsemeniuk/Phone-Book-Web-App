@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
     private ContactDaoImpl contactDao;
 
 
+
     public User get(int i){
         User user = userDao.get(i);
         user.setContacts(contactDao.getAll(i));

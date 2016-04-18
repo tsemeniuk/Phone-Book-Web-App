@@ -18,6 +18,20 @@ public class Contact {
     private String address;
     private String email;
 
+    public Contact() {
+
+    }
+
+    public Contact(String firstName, String secondName, String lastName, String phoneMobile, String phoneHome, String address, String email) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.lastName = lastName;
+        this.phoneMobile = phoneMobile;
+        this.phoneHome = phoneHome;
+        this.address = address;
+        this.email = email;
+    }
+
     public String getAddress() {
         return address;
     }

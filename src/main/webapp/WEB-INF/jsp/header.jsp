@@ -18,11 +18,21 @@
 <body>
 <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0">
     <div class="size">
-        <nav class="navbar navbar-inverse">
-            <div class="row">
-            </div>
-        </nav>
+        <a href="/">
+            <nav class="navbar navbar-inverse">
+                <div class="row">
+                </div>
+            </nav>
+        </a>
     </div>
 </div>
+
+<div class="container">
+    <div class="table">
+        Приветствую тебя <h4>${user.firstName}</h4>
+        <a href="/logout">Log Out</a>
+    </div>
+</div>
+
 </body>
 </html>

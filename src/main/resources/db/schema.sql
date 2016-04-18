@@ -15,17 +15,19 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table `mydb`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(45) NOT NULL,
-  `pasword` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
   `firstName` VARCHAR(45) NOT NULL,
   `secondName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  `enabled` TINYINT(1) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `username` (`username` ASC))
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -44,11 +46,28 @@ CREATE TABLE IF NOT EXISTS `mydb`.`contact` (
   PRIMARY KEY (`id`, `user_id`),
   INDEX `fk_contact_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_contact_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `mydb`.`user` (`id`)
+  FOREIGN KEY (`user_id`)
+  REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`authorities`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`authorities` (
+  `id` INT NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `authority` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_username_idx` (`username` ASC),
+  CONSTRAINT `fk_username`
+  FOREIGN KEY (`username`)
+  REFERENCES `mydb`.`users` (`username`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+  ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
