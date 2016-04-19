@@ -11,6 +11,8 @@
     <title>Home</title>
     <jsp:include page="header.jsp"/>
     <%--<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>--%>
+    <script src="/js/list.min.js"></script>
+
 </head>
 <body>
 
@@ -29,43 +31,48 @@
             <br>
         </div>
     </div>
+
+
     <div class="row">
         <div class="col-xs-12">
             <table class="table">
                 <tr>
-                    <th class="hidden">id</th>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Отчество</th>
-                    <th>Моб.телефон</th>
-                    <th>Дом.телефон</th>
-                    <th>Адрес</th>
-                    <th>Email</th>
-                    <th></th>
-                    <th></th>
+                <th>Фото</th>
+                <th class="hidden">id</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Отчество</th>
+                <th>Моб.телефон</th>
+                <th>Дом.телефон</th>
+                <th>Адрес</th>
+                <th>Email</th>
+                <th></th>
+                <th></th>
                 </tr>
                 <tbody class="list">
-                <c:forEach items="${user.contacts}" var="contact" varStatus="loop">
-                    <tr>
+                <c:forEach items="${contacts}" var="contact" varStatus="loop">
+
+                    <tr class="well">
+                        <td><img class="" src="/img/${contact.id}.jpg" width="75px"height="75px"></td>
                         <td class="hidden">${contact.id}</td>
-                        <td class="firstName">${contact.firstName}</td>
-                        <td class="secondName">${contact.secondName}</td>
-                        <td class="lastName">${contact.lastName}</td>
-                        <td class="phoneMobile">${contact.phoneMobile}</td>
-                        <td class="phoneHome">${contact.phoneHome}</td>
-                        <td class="address">${contact.address} </td>
-                        <td class="email">${contact.email} </td>
+                        <td class="firstName"><h4>${contact.firstName}</h4></td>
+                        <td class="secondName"><p>${contact.secondName}</p></td>
+                        <td class="lastName"><p>${contact.lastName}</p></td>
+                        <td class="phoneMobile"><p>${contact.phoneMobile}</p></td>
+                        <td class="phoneHome"><p>${contact.phoneHome}</p></td>
+                        <td class="address"><p>${contact.address}</p></td>
+                        <td class="email"><p>${contact.email}</p></td>
                         <td>
-                            <button class="btn" onclick="location.href='/edit/${contact.id}'">Edit</button>
+                            <button class="btn" onclick="location.href='/edit/${contact.id}'">Изменить</button>
                         </td>
                         <td>
-                            <button class="btn" onclick="deleteContact(${contact.id});" type="button">Delete</button>
+                            <button class="btn" onclick="deleteContact(${contact.id});" type="button">Удалить</button>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-            <button class="btn button" onclick="location.href='/add'">Add Contact</button>
+            <button class="btn button" onclick="location.href='/add'">Добавить</button>
         </div>
     </div>
 </div>

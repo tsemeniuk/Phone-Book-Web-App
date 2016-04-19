@@ -2,7 +2,7 @@ package com.phoneBook.service;
 
 import com.phoneBook.dao.ContactDaoImpl;
 import com.phoneBook.dao.UserDaoImpl;
-import com.phoneBook.entity.User;
+import com.phoneBook.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
     public User get(int i){
         User user = userDao.get(i);
-        user.setContacts(contactDao.getAll(i));
+//        user.setContacts(contactDao.getAll(i));
         return user;
     }
 

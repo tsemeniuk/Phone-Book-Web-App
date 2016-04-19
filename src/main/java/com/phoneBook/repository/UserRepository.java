@@ -1,9 +1,12 @@
-//package com.phoneBook.repository;
-//
-//import com.phoneBook.entity.User;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.stereotype.Repository;
-//
-//@Repository
-//public interface UserRepository extends JpaRepository<User, Long> {
-//}
+package com.phoneBook.repository;
+
+import com.phoneBook.models.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+//@Component
+//@Transactional
+public interface UserRepository extends CrudRepository<User, Integer> {
+    public User findByUsername(String username);
+}

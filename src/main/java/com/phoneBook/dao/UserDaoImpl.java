@@ -3,7 +3,7 @@ package com.phoneBook.dao;
 
 import com.phoneBook.dao.util.DataConnection;
 import com.phoneBook.dao.util.UserMapper;
-import com.phoneBook.entity.User;
+import com.phoneBook.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,12 @@
-//package com.phoneBook.repository;
-//
-//import com.phoneBook.entity.Contact;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.stereotype.Repository;
-//
-//@Repository
-//public interface ContactRepository extends JpaRepository<Contact, Long> {
-//}
+package com.phoneBook.repository;
+
+import com.phoneBook.models.Contact;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ContactRepository extends CrudRepository<Contact, Integer> {
+    public List<Contact> findAllByUsername(String username);
+}

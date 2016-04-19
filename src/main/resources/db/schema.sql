@@ -5,68 +5,57 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema phonebook
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema phonebook
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+DROP SCHEMA IF EXISTS `phonebook`;
+CREATE SCHEMA IF NOT EXISTS `phonebook` DEFAULT CHARACTER SET utf8 ;
+USE `phonebook` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`users`
+-- Table `phonebook`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`users` (
+CREATE TABLE IF NOT EXISTS `phonebook`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `firstName` VARCHAR(45) NOT NULL,
   `secondName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,
-  `enabled` TINYINT(1) NULL,
+  `enabled` TINYINT(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   INDEX `username` (`username` ASC))
   ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`contact`
+-- Table `phonebook`.`contact`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`contact` (
+CREATE TABLE IF NOT EXISTS `phonebook`.`contact` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(45) NOT NULL,
   `secondName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,
-  `phoneMobile` INT NOT NULL,
-  `phoneHome` INT NOT NULL,
+  `phoneMobile` VARCHAR(45) NOT NULL,
+  `phoneHome` VARCHAR(45) NOT NULL,
   `address` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `user_id`),
-  INDEX `fk_contact_user_idx` (`user_id` ASC),
-  CONSTRAINT `fk_contact_user`
-  FOREIGN KEY (`user_id`)
-  REFERENCES `mydb`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `username` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`authorities`
+-- Table `phonebook`.`authorities`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`authorities` (
-  `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `phonebook`.`authorities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `authority` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_username_idx` (`username` ASC),
-  CONSTRAINT `fk_username`
-  FOREIGN KEY (`username`)
-  REFERENCES `mydb`.`users` (`username`)
-    ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
+  `authority` VARCHAR(45) NOT NULL DEFAULT 'ROLE_USER',
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB;
 
 

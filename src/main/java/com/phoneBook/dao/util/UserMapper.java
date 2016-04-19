@@ -1,6 +1,6 @@
 package com.phoneBook.dao.util;
 
-import com.phoneBook.entity.User;
+import com.phoneBook.models.User;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;

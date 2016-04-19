@@ -1,7 +1,7 @@
 package com.phoneBook.dao;
 
 
-import com.phoneBook.entity.Contact;
+import com.phoneBook.models.Contact;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,22 +1,33 @@
-package com.phoneBook.entity;
+package com.phoneBook.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class User {
+@Table(name = "users")
+public class User implements Serializable{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotNull
+    @Column(name = "username")
     private String username;
+    @NotNull
+    @Column(name = "password")
     private String password;
+    @NotNull
+    @Column(name = "firstname")
     private String firstName;
+    @NotNull
+    @Column(name = "secondname")
     private String secondName;
+    @NotNull
+    @Column(name = "lastname")
     private String lastName;
     private Boolean enabled;
-    private List<Contact> contacts;
+//    private List<Contact> contacts;
 
     public User() {
     }
@@ -27,8 +38,15 @@ public class User {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
-        this.contacts = contacts;
+//        this.contacts = contacts;
     }
+    //    public List<Contact> getContacts() {
+//        return contacts;
+//    }
+
+//    public void setContacts(List<Contact> contacts) {
+//        this.contacts = contacts;
+//    }
 
     public Boolean getEnabled() {
         return enabled;
@@ -38,13 +56,6 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<Contact> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
-    }
 
     public Integer getId() {
         return id;
@@ -103,7 +114,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", contacts=" + contacts +
+//                ", contacts=" + contacts +
                 '}';
     }
 

@@ -64,11 +64,10 @@
                         <td><form:input path="email" placeholder="Не обязательно"/></td>
                     </tr>
                 </table>
-                <button type="button" class="btn" onclick="location.href='/'">Back</button>
-                <input class="btn" type="submit" value="Save"/>
+                <button type="button" class="btn" onclick="location.href='/'">Назад</button>
+                <input class="btn" type="submit" value="Сохранить"/>
                 <%--<form:button type="button" id="addContact">Submit</form:button>--%>
             </form:form>
-
 
         </div>
     </div>

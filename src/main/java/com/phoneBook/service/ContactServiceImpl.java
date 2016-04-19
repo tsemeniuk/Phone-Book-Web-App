@@ -2,7 +2,7 @@ package com.phoneBook.service;
 
 
 import com.phoneBook.dao.ContactDaoImpl;
-import com.phoneBook.entity.Contact;
+import com.phoneBook.models.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

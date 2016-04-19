@@ -1,22 +1,37 @@
-package com.phoneBook.entity;
+package com.phoneBook.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
-public class Contact {
+@Table(name = "contact")
+public class Contact implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotNull
+    @Column(name = "firstname")
     private String firstName;
+    @NotNull
+    @Column(name = "secondname")
     private String secondName;
+    @NotNull
+    @Column(name = "lastname")
     private String lastName;
+    @NotNull
+    @Column(name = "phonemobile")
     private String phoneMobile;
+    @NotNull
+    @Column(name = "phonehome")
     private String phoneHome;
+    @Column(name = "address")
     private String address;
+    @Column(name = "email")
     private String email;
+    @Column(name = "username")
+    private String username;
 
     public Contact() {
 
@@ -30,6 +45,14 @@ public class Contact {
         this.phoneHome = phoneHome;
         this.address = address;
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getAddress() {

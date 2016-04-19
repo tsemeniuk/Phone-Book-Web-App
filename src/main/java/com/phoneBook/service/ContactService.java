@@ -1,6 +1,6 @@
 package com.phoneBook.service;
 
-import com.phoneBook.entity.Contact;
+import com.phoneBook.models.Contact;
 
 import java.sql.SQLException;
 import java.util.List;

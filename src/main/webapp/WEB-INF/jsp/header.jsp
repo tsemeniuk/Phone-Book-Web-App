@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -6,13 +7,12 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/media.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/card.css" rel="stylesheet" type="text/css" media="all">
 
-    <link rel="icon" type="image/png" href="/img/salesa.png"/>
-    <link rel="apple-touch-icon" href="/img/salesa.png"/>
-    <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+    <script src="/js/jquery-1.12.3.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
-    <script src="/js/list.min.js"></script>
+
 
 </head>
 <body>
@@ -28,9 +28,13 @@
 </div>
 
 <div class="container">
-    <div class="table">
-        Приветствую тебя <h4>${user.firstName}</h4>
-        <a href="/logout">Log Out</a>
+    <div class="navbar-right">
+            <c:if test="${not empty user.username}">
+                <h4>${user.firstName}</h4> &nbsp;&nbsp;&nbsp;&nbsp;
+                <%--<span class="glyphicon glyphicon-user">--%>
+                <%--</span>--%>
+                <a href="/logout">Log Out</a>
+            </c:if>
     </div>
 </div>
 

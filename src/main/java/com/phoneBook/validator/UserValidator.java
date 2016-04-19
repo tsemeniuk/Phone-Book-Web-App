@@ -1,6 +1,6 @@
 //package com.phoneBook.validator;
 //
-//import com.phoneBook.entity.User;
+//import com.phoneBook.models.User;
 //import com.phoneBook.service.UserService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Component;
