@@ -1,33 +1,45 @@
 package com.phoneBook.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable{
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotNull
+
+    @NotEmpty(message = "Это поле обязательное.")
+    @Size(min = 3, max = 30)
     @Column(name = "username")
     private String username;
-    @NotNull
+
+    @NotEmpty(message = "Это поле обязательное.")
+    @Size(min = 5, max = 30)
     @Column(name = "password")
     private String password;
-    @NotNull
+
+    @NotEmpty(message = "Это поле обязательное.")
+    @Size(min = 5, max = 30)
     @Column(name = "firstname")
     private String firstName;
-    @NotNull
+
+    @NotEmpty(message = "Это поле обязательное.")
+    @Size(min = 5, max = 30)
     @Column(name = "secondname")
     private String secondName;
-    @NotNull
+
+    @NotEmpty(message = "Это поле обязательное.")
+    @Size(min = 5, max = 30)
     @Column(name = "lastname")
     private String lastName;
+
     private Boolean enabled;
-//    private List<Contact> contacts;
 
     public User() {
     }
@@ -38,15 +50,7 @@ public class User implements Serializable{
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
-//        this.contacts = contacts;
     }
-    //    public List<Contact> getContacts() {
-//        return contacts;
-//    }
-
-//    public void setContacts(List<Contact> contacts) {
-//        this.contacts = contacts;
-//    }
 
     public Boolean getEnabled() {
         return enabled;
@@ -114,7 +118,6 @@ public class User implements Serializable{
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", lastName='" + lastName + '\'' +
-//                ", contacts=" + contacts +
                 '}';
     }
 

@@ -68,16 +68,19 @@ tr.well:hover {
     border-top-right-radius: 0;
 }
 
-/*input {*/
-    /*margin: 25px 0 25px 0;*/
-/*}*/
+input {
+margin: auto;
+}
 
 input#inputEmail {
     margin: 0 0 25px 0;
 }
+input#inputReg {
+    margin: 10px 0 10px 0;
+}
 
-button {
-    margin: 25px 0 25px 0;
+.button {
+    margin: auto;
 }
 
 .msg {
@@ -100,4 +103,12 @@ button {
 .form-signin input {
     margin: -10px 0 0 0;;
 
+}
+
+label {
+    text-align: right;
+    float: right;
+}
+div#bottom-btn-div {
+    text-align: center;
 }

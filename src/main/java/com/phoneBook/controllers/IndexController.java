@@ -15,13 +15,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -61,18 +62,13 @@ public class IndexController {
     }
 
 
-    @RequestMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
-//            request.getSession().invalidate();
-        }*/
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginSuccess() {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginSuccess(Model model) {
+    @RequestMapping("/logout")
+    public String logout() {
         return "redirect:/";
     }
 
@@ -84,37 +80,37 @@ public class IndexController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerSubmit(@ModelAttribute("user") User user, Model model, HttpServletRequest request,
+    public String registerSubmit(@ModelAttribute("user") @Valid User user, BindingResult result, Model model, HttpServletRequest request,
                                  @RequestParam(value = "error", required = false) String error) {
-
-        if (error != null) {
-            model.addAttribute("error", "Неправельный логин и/или пароль.");
+        if (result.hasErrors()) {
             return "register";
+        } else {
+//            if (error != null) {
+//                model.addAttribute("error", "Неправельный логин и/или пароль.");
+//                return "register";
+//            }
+
+
+            user.setEnabled(true);
+            userRepository.save(user);
+
+            Authorities authorities = new Authorities();
+            authorities.setUsername(user.getUsername());
+            authorities.setAuthority("ROLE_USER");
+            authoritiesRepository.save(authorities);
+
+
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+            Authentication auth = authenticationManager.authenticate(token);
+            // Place the new Authentication object in the security context.
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            //this step is import, otherwise the new login is not in session which is required by Spring Security
+            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+
+
+            model.addAttribute("user", user);
+            return "redirect:/";
         }
-        user.setEnabled(true);
-        userRepository.save(user);
-
-        Authorities authorities = new Authorities();
-        authorities.setUsername(user.getUsername());
-        authorities.setAuthority("ROLE_USER");
-        authoritiesRepository.save(authorities);
-
-//        request.login(user.getUsername(), user.getPassword());
-
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-        Authentication auth = authenticationManager.authenticate(token);
-        // Place the new Authentication object in the security context.
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-        //this step is import, otherwise the new login is not in session which is required by Spring Security
-        request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-
-
-        model.addAttribute("user", user);
-        return "redirect:/";
     }
-//        return "redirect:/";
-
-
 }

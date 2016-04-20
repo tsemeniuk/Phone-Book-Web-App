@@ -15,6 +15,7 @@
 
 </head>
 <body>
+<jsp:useBean id="random" class="java.util.Random" scope="application" />
 
 <div id="contacts" class="container">
     <div class="row">
@@ -35,6 +36,7 @@
 
     <div class="row">
         <div class="col-xs-12">
+            <button class="btn button" onclick="location.href='/add'">Добавить</button>
             <table class="table">
                 <tr>
                 <th>Фото</th>
@@ -51,13 +53,14 @@
                 </tr>
                 <tbody class="list">
                 <c:forEach items="${contacts}" var="contact" varStatus="loop">
-
+                   <c:set var="randomNumber" value="${random.nextInt(14)+1}"/>
                     <tr class="well">
-                        <td><img class="" src="/img/${contact.id}.jpg" width="75px"height="75px"></td>
+                        <td><img class="" src="/img/${randomNumber}.jpg" width="75px"height="75px"></td>
+                        <%--<td><img class="" src="/img/${contact.id}.jpg" width="75px"height="75px"></td>--%>
                         <td class="hidden">${contact.id}</td>
-                        <td class="firstName"><h4>${contact.firstName}</h4></td>
-                        <td class="secondName"><p>${contact.secondName}</p></td>
-                        <td class="lastName"><p>${contact.lastName}</p></td>
+                        <td class="firstName"><h5>${contact.firstName}</h5></td>
+                        <td class="secondName"><h5>${contact.secondName}</h5></td>
+                        <td class="lastName"><h5>${contact.lastName}</h5></td>
                         <td class="phoneMobile"><p>${contact.phoneMobile}</p></td>
                         <td class="phoneHome"><p>${contact.phoneHome}</p></td>
                         <td class="address"><p>${contact.address}</p></td>
@@ -72,10 +75,15 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <button class="btn button" onclick="location.href='/add'">Добавить</button>
+
         </div>
     </div>
 </div>
+
+
+<%--<c:set var="rand">--%>
+    <%--<%= java.lang.Math.round(java.lang.Math.random() * 2) %></c:set>--%>
+<%--<%= (int) (Math.abs() * 14) %>--%>
 
 <jsp:include page="footer.jsp"/>
 </body>

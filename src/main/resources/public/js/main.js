@@ -44,7 +44,14 @@ $(document).ready(function () {
         });
     });
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+//            placement: "bottom",
+            trigger: "hover",
+            'container': 'body'
+        })
 
+    })
 
     //$('#deleteContact').click(function () {
     //    $.ajax({

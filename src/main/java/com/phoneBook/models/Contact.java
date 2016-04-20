@@ -1,8 +1,12 @@
 package com.phoneBook.models;
 
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
@@ -11,25 +15,38 @@ public class Contact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotNull
+
+    @NotEmpty
+    @Size(min = 4)
     @Column(name = "firstname")
     private String firstName;
-    @NotNull
+
+    @NotEmpty
+    @Size(min = 4)
     @Column(name = "secondname")
     private String secondName;
-    @NotNull
+
+    @NotEmpty
+    @Size(min = 4)
     @Column(name = "lastname")
     private String lastName;
-    @NotNull
+
+    @Pattern(regexp = "^((8|\\+38)-?)?(\\(?\\d{3}\\)?)\\s?-?\\d{3}-?\\d{2}-?\\d{2}$")
+    @NotEmpty
     @Column(name = "phonemobile")
     private String phoneMobile;
-    @NotNull
+
+    @Pattern(regexp = "^((8|\\+38)-?)?(\\(?\\d{3}\\)?)\\s?-?\\d{3}-?\\d{2}-?\\d{2}$")
     @Column(name = "phonehome")
     private String phoneHome;
+
     @Column(name = "address")
     private String address;
+
+    @Email
     @Column(name = "email")
     private String email;
+
     @Column(name = "username")
     private String username;
 
