@@ -21,18 +21,19 @@
     <div class="row">
         <div class="col-xs-12 ">
             <input class="search" placeholder="Search"/>
-            &nbsp;&nbsp;Сортировать по:
-            <span class="sort btn" data-sort="firstName">Имени</span>
-            <span class="sort btn" data-sort="secondName">Фамилии</span>
-            <span class="sort btn" data-sort="phoneMobile">Моб. телефону</span>
-            <span class="sort btn" data-sort="address">Адресу</span>
-            <span class="sort btn" data-sort="email">Email</span>
+            &nbsp;&nbsp;Сортировать по:&nbsp;&nbsp;
+            <span class="sort sort-button" data-sort="firstName">Имени</span>
+            <span class="sort sort-button" data-sort="secondName">Фамилии</span>
+            <span class="sort sort-button" data-sort="lastName">Фамилии</span>
+            <span class="sort sort-button" data-sort="phoneMobile">Моб. телефону</span>
+            <span class="sort sort-button" data-sort="phoneHome">Дом. телефону</span>
+            <span class="sort sort-button" data-sort="address">Адресу</span>
+            <span class="sort sort-button" data-sort="email">Email</span>
             <br>
             <br>
             <br>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-xs-12">
@@ -66,10 +67,14 @@
                         <td class="address"><p>${contact.address}</p></td>
                         <td class="email"><p>${contact.email}</p></td>
                         <td>
-                            <button class="btn" onclick="location.href='/edit/${contact.id}'">Изменить</button>
+                            <button class="btn" onclick="location.href='/edit/${contact.id}'">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
                         </td>
                         <td>
-                            <button class="btn" onclick="deleteContact(${contact.id});" type="button">Удалить</button>
+                            <button class="btn" id="delete-btn" onclick="deleteContact(${contact.id});" type="button" >
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -79,15 +84,15 @@
         </div>
     </div>
 </div>
-
-
-<%--<c:set var="rand">--%>
-    <%--<%= java.lang.Math.round(java.lang.Math.random() * 2) %></c:set>--%>
-<%--<%= (int) (Math.abs() * 14) %>--%>
-
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
+<style>
+    #delete-btn {
+        background-color: #ff6b6d;
+        color: #f8f8f8;
+    }
+</style>
 <script>
     var options = {
         valueNames: ['firstName', 'secondName', 'lastName', 'phoneMobile', 'phoneHome', 'address', 'email']

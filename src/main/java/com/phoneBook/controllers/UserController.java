@@ -4,8 +4,8 @@ import com.phoneBook.models.Authorities;
 import com.phoneBook.models.Contact;
 import com.phoneBook.models.User;
 import com.phoneBook.repository.AuthoritiesRepository;
-import com.phoneBook.repository.ContactRepository;
-import com.phoneBook.repository.UserRepository;
+import com.phoneBook.service.ContactServiceImpl;
+import com.phoneBook.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,11 +27,11 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-public class IndexController {
+public class UserController {
     @Autowired
-    private UserRepository userRepository;
+    private UserServiceImpl userService;
     @Autowired
-    private ContactRepository contactRepository;
+    private ContactServiceImpl contactService;
     @Autowired
     @Qualifier("authenticationManager")
     protected AuthenticationManager authenticationManager;
@@ -40,8 +40,8 @@ public class IndexController {
 
     @RequestMapping("/")
     public String welcome(Model model, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
-        List<Contact> contacts = contactRepository.findAllByUsername(principal.getName());
+        User user = userService.findByUsername(principal.getName());
+        List<Contact> contacts = contactService.findAllByUsername(principal.getName());
 
         model.addAttribute("user", user);
         model.addAttribute("contacts", contacts);
@@ -85,15 +85,11 @@ public class IndexController {
         if (result.hasErrors()) {
             return "register";
         } else {
-//            if (error != null) {
-//                model.addAttribute("error", "Неправельный логин и/или пароль.");
-//                return "register";
-//            }
-
-
+            //Добавляем по умолчанию статус - активный
             user.setEnabled(true);
-            userRepository.save(user);
+            userService.save(user);
 
+            //Добавляем по умолчанию роль - пользователь
             Authorities authorities = new Authorities();
             authorities.setUsername(user.getUsername());
             authorities.setAuthority("ROLE_USER");
@@ -107,8 +103,6 @@ public class IndexController {
 
             //this step is import, otherwise the new login is not in session which is required by Spring Security
             request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-
-
             model.addAttribute("user", user);
             return "redirect:/";
         }

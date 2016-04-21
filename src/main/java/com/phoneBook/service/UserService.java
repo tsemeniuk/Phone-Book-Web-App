@@ -1,11 +1,12 @@
 package com.phoneBook.service;
 
 import com.phoneBook.models.User;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-
+@Service
 public interface UserService {
-    public User get(int i) throws SQLException, ClassNotFoundException;
 
-    public void add(User user);
+    public void save(User user);
+
+    public User findByUsername(String userName);
 }

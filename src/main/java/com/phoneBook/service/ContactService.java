@@ -1,18 +1,18 @@
 package com.phoneBook.service;
 
 import com.phoneBook.models.Contact;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public interface ContactService {
-    public List<Contact> getAll(int i) throws SQLException, ClassNotFoundException;
+    public List<Contact> findAllByUsername(String userName);
 
-    public Contact get(int i);
+    public Contact findOne(int contactId);
 
     public void delete(int i);
 
-    public void add(Contact contact, int userId);
+    public void save(Contact contact);
 
-    public void edit(Contact contact);
 }

@@ -7,7 +7,6 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/media.css" rel="stylesheet" type="text/css" media="all">
-    <link href="/css/card.css" rel="stylesheet" type="text/css" media="all">
 
     <script src="/js/jquery-1.12.3.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -29,12 +28,13 @@
 
 <div class="container">
     <div class="navbar-right">
-            <c:if test="${not empty user.username}">
-                <h4>${user.firstName}</h4> &nbsp;&nbsp;&nbsp;&nbsp;
-                <%--<span class="glyphicon glyphicon-user">--%>
-                <%--</span>--%>
-                <a href="/logout">Log Out</a>
-            </c:if>
+        <c:if test="${not empty user.id}">
+            <p>
+                <span class="glyphicon glyphicon-user"></span>
+                    ${user.firstName}&nbsp;${user.secondName}&nbsp;${user.lastName}&nbsp;&nbsp;&nbsp;
+            <a href="/logout" style="font-weight: bold">Log Out</a>
+            </p>
+        </c:if>
     </div>
 </div>
 

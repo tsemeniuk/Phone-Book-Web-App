@@ -3,6 +3,8 @@ package com.phoneBook.models;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
@@ -13,9 +15,10 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @NotEmpty(message = "Это поле обязательное.")
+    //     @Pattern(regexp = "[^0-30]*")
+    @NotNull(message = "Это поле обязательное.")
     @Size(min = 3, max = 30)
+    @Pattern(regexp = "^[a-zA-Z0-9_]*$", message = "Только английские символы, без спецсимволов : ()[]/\\|!@#$%^&*~+-_=")
     @Column(name = "username")
     private String username;
 

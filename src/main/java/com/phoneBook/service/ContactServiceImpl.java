@@ -1,8 +1,8 @@
 package com.phoneBook.service;
 
 
-import com.phoneBook.dao.ContactDaoImpl;
 import com.phoneBook.models.Contact;
+import com.phoneBook.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,28 +11,25 @@ import java.util.List;
 @Service
 public class ContactServiceImpl implements ContactService {
     @Autowired
-    private ContactDaoImpl contactDao;
+    private ContactRepository contactRepository;
 
-//    @Autowired
-//    private ContactRepository contactRepository;
-
-    public List<Contact> getAll(int userId) {
-        return contactDao.getAll(userId);
+    @Override
+    public List<Contact> findAllByUsername(String userName) {
+        return contactRepository.findAllByUsername(userName);
     }
 
-    public Contact get(int i) {
-        return contactDao.get(i);
+    @Override
+    public Contact findOne(int contactId) {
+        return contactRepository.findOne(contactId);
     }
 
-    public void delete(int userId) {
-        contactDao.delete(userId);
+    @Override
+    public void delete(int contactId) {
+        contactRepository.delete(contactId);
     }
 
-    public void add(Contact contact, int userId) {
-        contactDao.add(contact, userId);
-    }
-
-    public void edit(Contact contact) {
-        contactDao.edit(contact);
+    @Override
+    public void save(Contact contact) {
+        contactRepository.save(contact);
     }
 }

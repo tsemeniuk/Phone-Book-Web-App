@@ -1,7 +1,7 @@
 package com.phoneBook.controllers;
 
 import com.phoneBook.models.Contact;
-import com.phoneBook.repository.ContactRepository;
+import com.phoneBook.service.ContactServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import java.security.Principal;
 @Controller
 public class ContactController {
     @Autowired
-    private ContactRepository contactRepository;
+    private ContactServiceImpl contactService;
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPage(@ModelAttribute("contact") Contact contact) {
@@ -28,14 +28,14 @@ public class ContactController {
             return "add";
         } else {
             contact.setUsername(principal.getName());
-            contactRepository.save(contact);
+            contactService.save(contact);
             return "redirect:/";
         }
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable int id, Model model) {
-        model.addAttribute("contact", contactRepository.findOne(id));
+        model.addAttribute("contact", contactService.findOne(id));
         return "edit";
     }
 
@@ -45,14 +45,14 @@ public class ContactController {
             return "edit";
         } else {
             contact.setUsername(principal.getName());
-            contactRepository.save(contact);
+            contactService.save(contact);
             return "redirect:/";
         }
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@RequestParam("id") int id) {
-        contactRepository.delete(id);
+        contactService.delete(id);
         return "redirect:/";
     }
 }

@@ -1,26 +1,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<div class="footer">
-    <nav class="foot">
-        <div class="text">
-            Phone Book <br>
-            All Rigths Reserved
+
+<footer class="footer">
+    <div class="container">
+        <div class="foot-data">
+            <p>Phone Book <br> All Rigths Reserved</p>
         </div>
-    </nav>
-</div>
+    </div>
+</footer>
+
 <style>
-    .foot {
-        background-color: #dbdbdb;
-        margin-top: 50px;
-        height: 50px;
+
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+
+    body {
+        margin-bottom: 60px;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 60px;
+        background-color: #242424;
+    }
+
+    .footer p {
+        text-align: center;
+        margin-top: 10px;
+        color: #adadad;
+        font-size: larger;
+    }
+
+    .foot-data {
         text-align: center;
     }
 
-    .text {
-        padding: 10px;
-        text-align: center;
-    }
 </style>
 </body>
 </html>

@@ -31,12 +31,12 @@ public class Contact implements Serializable {
     @Column(name = "lastname")
     private String lastName;
 
-    @Pattern(regexp = "^((8|\\+38)-?)?(\\(?\\d{3}\\)?)\\s?-?\\d{3}-?\\d{2}-?\\d{2}$")
+    @Pattern(regexp = "^((8|\\+38)-?)?\\s?(\\(?\\d{3}\\)?)?\\s?-?\\d{3}-?\\s?\\d{2}-?\\s?\\d{2}$")
     @NotEmpty
     @Column(name = "phonemobile")
     private String phoneMobile;
 
-    @Pattern(regexp = "^((8|\\+38)-?)?(\\(?\\d{3}\\)?)\\s?-?\\d{3}-?\\d{2}-?\\d{2}$")
+    @Pattern(regexp = "^((8|\\+38)-?)?\\s?(\\(?\\d{3}\\)?)?\\s?-?\\d{3}-?\\s?\\d{2}-?\\s?\\d{2}$")
     @Column(name = "phonehome")
     private String phoneHome;
 
