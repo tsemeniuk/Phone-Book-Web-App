@@ -1,13 +1,16 @@
-package com.phoneBook.service;
+package com.phoneBook.service.mysqlImpl;
 
 
 import com.phoneBook.models.Contact;
 import com.phoneBook.repository.ContactRepository;
+import com.phoneBook.service.interfaces.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Profile("mysql")
 @Service
 public class ContactServiceImpl implements ContactService {
     @Autowired

@@ -1,8 +1,9 @@
-package com.phoneBook.controllers;
+package com.phoneBook.controllers.mysqlContrller;
 
 import com.phoneBook.models.Contact;
-import com.phoneBook.service.ContactServiceImpl;
+import com.phoneBook.service.mysqlImpl.ContactServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 
+@Profile("mysql")
 @Controller
 public class ContactController {
     @Autowired

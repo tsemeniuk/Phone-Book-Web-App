@@ -1,5 +1,7 @@
 package com.phoneBook.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -7,15 +9,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    //     @Pattern(regexp = "[^0-30]*")
+
     @NotNull(message = "Это поле обязательное.")
     @Size(min = 3, max = 30)
     @Pattern(regexp = "^[a-zA-Z0-9_]*$", message = "Только английские символы, без спецсимволов : ()[]/\\|!@#$%^&*~+-_=")
@@ -46,8 +47,12 @@ public class User implements Serializable {
 
     public User() {
     }
-
-    public User(String username, String password, String firstName, String secondName, String lastName, List<Contact> contacts) {
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public User(@JsonProperty("username") String username,
+                @JsonProperty("password")String password,
+                @JsonProperty("firstName")String firstName,
+                @JsonProperty("secondName")String secondName,
+                @JsonProperty("lastName")String lastName) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -114,7 +119,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -125,4 +130,8 @@ public class User implements Serializable {
     }
 
 
+    @Override
+    public int compareTo(User user) {
+        return id > user.id ? 1 : id == user.id ? 0 : -1;
+    }
 }

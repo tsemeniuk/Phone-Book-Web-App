@@ -20,8 +20,8 @@ import java.util.Random;
 @SpringBootApplication
 @EnableJpaRepositories(basePackageClasses = {ContactRepository.class, UserRepository.class})
 @EntityScan(basePackageClasses = {User.class, Contact.class, Authorities.class})
-@EnableAutoConfiguration
-@Profile({"mysql","hsql"})
+@EnableAutoConfiguration()
+@Profile({"mysql","json"})
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) throws Exception {
@@ -43,3 +43,6 @@ public class Application extends SpringBootServletInitializer {
         return new java.util.Random();
     }
 }
+
+
+

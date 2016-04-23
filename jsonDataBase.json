@@ -1,0 +1,44 @@
+{
+  "contact" : {
+    "1" : {
+      "firstName" : "Юзер",
+      "secondName" : "Юзерович",
+      "lastName" : "Юзеров",
+      "phoneMobile" : "(067)171-19-18",
+      "phoneHome" : "(093)371-99-51",
+      "address" : "UA",
+      "email" : "some@email.com",
+      "id" : 1,
+      "username" : "user"
+    },
+    "2" : {
+      "firstName" : "Юзер",
+      "secondName" : "Юзерович",
+      "lastName" : "Юзеров",
+      "phoneMobile" : "(067)171-19-18",
+      "phoneHome" : "(093)371-99-510",
+      "address" : "UA",
+      "email" : "some@email.com",
+      "id" : 2,
+      "username" : "user"
+    }
+  },
+  "authority" : {
+    "1" : {
+      "username" : "user",
+      "authority" : "ROLE_USER",
+      "id" : 1
+    }
+  },
+  "user" : {
+    "1" : {
+      "username" : "user",
+      "password" : "pass",
+      "firstName" : "Юзер",
+      "secondName" : "Юзеров",
+      "lastName" : "Юзерович",
+      "id" : 1,
+      "enabled" : true
+    }
+  }
+}

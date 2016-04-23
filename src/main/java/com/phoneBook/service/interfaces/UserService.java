@@ -1,4 +1,4 @@
-package com.phoneBook.service;
+package com.phoneBook.service.interfaces;
 
 import com.phoneBook.models.User;
 import org.springframework.stereotype.Service;

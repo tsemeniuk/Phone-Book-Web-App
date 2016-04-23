@@ -1,6 +1,8 @@
 package com.phoneBook.models;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -11,7 +13,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "contact")
-public class Contact implements Serializable {
+public class Contact implements Serializable, Comparable<Contact> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -54,7 +56,14 @@ public class Contact implements Serializable {
 
     }
 
-    public Contact(String firstName, String secondName, String lastName, String phoneMobile, String phoneHome, String address, String email) {
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public Contact(@JsonProperty("firstName") String firstName,
+                   @JsonProperty("secondName") String secondName,
+                   @JsonProperty("lastName") String lastName,
+                   @JsonProperty("phoneMobile") String phoneMobile,
+                   @JsonProperty("phoneHome") String phoneHome,
+                   @JsonProperty("address") String address,
+                   @JsonProperty("email") String email) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
@@ -148,5 +157,10 @@ public class Contact implements Serializable {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Contact contact) {
+        return id > contact.id ? 1 : id == contact.id ? 0 : -1;
     }
 }
