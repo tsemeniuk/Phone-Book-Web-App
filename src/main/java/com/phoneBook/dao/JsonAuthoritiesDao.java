@@ -2,8 +2,12 @@ package com.phoneBook.dao;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.phoneBook.dao.util.StringCorrector;
 import com.phoneBook.models.Authorities;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -12,6 +16,9 @@ import java.util.HashMap;
 
 @Service
 public class JsonAuthoritiesDao {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonAuthoritiesDao.class);
+    @Autowired
+    StringCorrector stringCorrector;
 
     public Authorities findByUsername(String username) {
         try {
@@ -24,7 +31,7 @@ public class JsonAuthoritiesDao {
             for (Object o : userMap.values()) {
                 if (o.toString().contains("=" + username + ",")) {
 
-                    String editedJsonString = correctString(o);
+                    String editedJsonString = stringCorrector.correctString(o);
                     return mapper.readValue(editedJsonString, Authorities.class);
                 }
             }
@@ -46,13 +53,9 @@ public class JsonAuthoritiesDao {
 
             jsonFile = mapper.writeValueAsString(root);
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);
+            LOGGER.info("Сахранения уровня доступа пользователя успешно.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    public  String correctString(Object string) {
-        return string.toString().replace("=", "\" : \"")
-                .replace("{", "{\"").replace("}", "\"}")
-                .replace(",", "\" ,\"").replace(" ", "");
     }
 }

@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoneBook.models.Authorities;
 import com.phoneBook.models.Contact;
 import com.phoneBook.models.User;
-import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -15,16 +16,14 @@ import java.util.Random;
 
 @Service
 public class InitializeJsonDao {
-    public static void main(String[] args) throws IOException {
-        InitializeJsonDao initializeJsonDao = new InitializeJsonDao();
-        initializeJsonDao.initializeJsonDataBase();
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(InitializeJsonDao.class);
+    private String jsonDb;
 
     @PostConstruct
-    public void initializeJsonDataBase() throws IOException {
+    public void initializeJsonDataBase() {
+        LOGGER.info("Начало заполнения файл хранилище JSON ! \n");
         Random random = new Random();
         ObjectMapper mapper = new ObjectMapper();
-        String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
 
         JsonDbTable root = new JsonDbTable();
         root.put("user", new HashMap());
@@ -36,7 +35,7 @@ public class InitializeJsonDao {
             user.setId(i);
             user.setUsername("user");
             user.setPassword("pass");
-            user.setFirstName("Юзер");
+            user.setFirstName("Юзер" + i);
             user.setSecondName("Юзеров");
             user.setLastName("Юзерович");
             user.setEnabled(true);
@@ -49,7 +48,8 @@ public class InitializeJsonDao {
             contact.setSecondName("Юзерович");
             contact.setLastName("Юзеров");
             contact.setPhoneMobile("(067) 171-" + (random.nextInt(89) + 10) + "-" + (random.nextInt(89) + 10));
-            contact.setPhoneHome("(093) 371-" + (random.nextInt(89) + 10) + "-" + (random.nextInt(89) + 10));
+            contact.setPhoneHome("(093) " + (random.nextInt((89) + 10) * 10) + "-" + (random.nextInt(89) + 10) +
+                    "-" + (random.nextInt(89) + 10));
             contact.setAddress("UA");
             contact.setEmail("some@email.com");
             contact.setUsername("user");
@@ -63,8 +63,13 @@ public class InitializeJsonDao {
             root.get("authority").put(i, authority);
         }
 
-        str = mapper.writeValueAsString(root);
-        System.out.println(str);
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);
+        try {
+            jsonDb = mapper.writeValueAsString(root);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        LOGGER.info(jsonDb + "\n");
+        LOGGER.info("Данные для файл хранилище JSON, заполнены !");
     }
 }

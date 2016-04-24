@@ -8,6 +8,7 @@ import com.phoneBook.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +21,8 @@ import java.util.Random;
 @SpringBootApplication
 @EnableJpaRepositories(basePackageClasses = {ContactRepository.class, UserRepository.class})
 @EntityScan(basePackageClasses = {User.class, Contact.class, Authorities.class})
-@EnableAutoConfiguration()
-@Profile({"mysql","json"})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@Profile({"mysql", "json"})
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) throws Exception {

@@ -31,11 +31,12 @@
         <c:if test="${not empty user.id}">
             <p>
                 <span class="glyphicon glyphicon-user"></span>
-                    ${user.firstName}&nbsp;${user.secondName}&nbsp;${user.lastName}&nbsp;&nbsp;&nbsp;
+                    ${user.firstName}&nbsp;${user.secondName}&nbsp;${user.lastName}&nbsp;&nbsp;|&nbsp;
             <a href="/logout" style="font-weight: bold">Log Out</a>
             </p>
         </c:if>
     </div>
+<hr>
 </div>
 
 </body>

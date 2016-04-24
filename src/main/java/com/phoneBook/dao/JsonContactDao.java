@@ -1,8 +1,12 @@
 package com.phoneBook.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.phoneBook.dao.util.StringCorrector;
 import com.phoneBook.models.Contact;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -11,12 +15,9 @@ import java.util.*;
 
 @Service
 public class JsonContactDao {
-
-
-    public static void main(String[] args) {
-        JsonContactDao jsonContactDao = new JsonContactDao();
-        jsonContactDao.findAllByUsername("user");
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonContactDao.class);
+    @Autowired
+    StringCorrector stringCorrector;
 
     public List<Contact> findAllByUsername(String userName) {
         List list = new ArrayList();
@@ -29,9 +30,7 @@ public class JsonContactDao {
 
             for (Object o : contactMap.values()) {
                 if (o.toString().contains("=" + userName)) {
-
-                    String editedJsonString = correctString(o);
-                    System.out.println(editedJsonString);
+                    String editedJsonString = stringCorrector.correctString(o);
                     Contact contact = mapper.readValue(editedJsonString, Contact.class);
                     list.add(contact);
                 }
@@ -40,7 +39,6 @@ public class JsonContactDao {
             throw new RuntimeException(e);
         }
         Collections.sort(list);
-
         return list;
     }
 
@@ -55,7 +53,7 @@ public class JsonContactDao {
             for (Object o : contactMap.values()) {
                 if (o.toString().contains("=" + contactId + ",")) {
 
-                    String editedJsonString = correctString(o);
+                    String editedJsonString = stringCorrector.correctString(o);
                     return mapper.readValue(editedJsonString, Contact.class);
                 }
             }
@@ -70,17 +68,18 @@ public class JsonContactDao {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(str, JsonDbTable.class);
             ObjectMapper mapper = new ObjectMapper();
-
             HashMap contactMap = root.get("contact");
 
             Iterator it = contactMap.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
                 if (pair.getValue().toString().contains("=" + contactId + ",")) {
+
                     it.remove(); // avoids a ConcurrentModificationException
                     contactMap = rebuildMap(contactMap, mapper);
                     root.replace("contact", contactMap);
                     mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);
+                    LOGGER.info("Контакт был удален успешно.");
                 }
             }
         } catch (IOException e) {
@@ -93,9 +92,8 @@ public class JsonContactDao {
         ArrayList list = new ArrayList(contactMap.values());
 
         for (int i = 0; i < list.size(); i++) {
-            String jsonStringObject = list.get(i).toString();
 
-            String editedJsonString = correctString(jsonStringObject);
+            String editedJsonString = stringCorrector.correctString(list.get(i).toString());
             Contact contact = mapper.readValue(editedJsonString, Contact.class);
             contact.setId(i + 1);
             newMap.put(i + 1, contact);
@@ -108,9 +106,7 @@ public class JsonContactDao {
             String jsonFile = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(jsonFile, JsonDbTable.class);
             ObjectMapper mapper = new ObjectMapper();
-
             HashMap contactMap = root.get("contact");
-
 
             if (contact.getId() == null) {
                 contact.setId(contactMap.size() + 1);
@@ -119,17 +115,12 @@ public class JsonContactDao {
             } else {
                 contactMap.put(contact.getId(), contact);
             }
-
             jsonFile = mapper.writeValueAsString(root);
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);
+            LOGGER.info("Контакт был добавлен, в базу данных, успешно.");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String correctString(Object string) {
-        return string.toString().replace("=", "\" : \"")
-                .replace("{", "{\"").replace("}", "\"}")
-                .replace(",", "\" ,\"").replace(" ", "");
     }
 }
