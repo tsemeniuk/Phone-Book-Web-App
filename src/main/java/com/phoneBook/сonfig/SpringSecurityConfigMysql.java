@@ -1,35 +1,32 @@
-package com.phoneBook.Config;
+package com.phoneBook.сonfig;
 
-import com.phoneBook.service.JsonUserDetailsService;
+import com.phoneBook.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import javax.sql.DataSource;
 
-@Profile("json")
+@Profile("mysql")
 @Configuration
-@PropertySource(value = "classpath:application-json.properties")
-public class SpringSecurityConfigJson extends WebSecurityConfigurerAdapter {
-    @Autowired
-    JsonUserDetailsService jsonUserDetailsService;
-
+@ComponentScan(basePackageClasses = User.class)
+@PropertySource(value = "classpath:application-mysql.properties")
+public class SpringSecurityConfigMysql extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment env;
 
+    @Primary
     @Bean
-    public DataSource dataSourceJson() {
-        DriverManagerDataSource dataSource = new SingleConnectionDataSource();
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getRequiredProperty("spring.datasource.driver-class-name"));
         dataSource.setUrl(env.getRequiredProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getRequiredProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getRequiredProperty("spring.datasource.password"));
         return dataSource;
     }
 
@@ -43,7 +40,7 @@ public class SpringSecurityConfigJson extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobalJson(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jsonUserDetailsService);
+    public void configureGlobalMysql(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource());
     }
 }

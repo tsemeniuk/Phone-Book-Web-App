@@ -159,10 +159,6 @@ public class User implements UserDetails, Serializable, Comparable<User> {
 
     @Override
     public boolean isEnabled() {
-        /*if (enabled == null) {
-            return true;
-        }
-        return enabled;*/
         return false;
     }
 
