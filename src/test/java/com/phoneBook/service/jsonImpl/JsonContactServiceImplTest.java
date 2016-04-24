@@ -43,7 +43,7 @@ public class JsonContactServiceImplTest {
         List<Contact> contacts = jsonContactService.findAllByUsername(username);
 
         //verify
-        verify(jsonContactDao, times(1));
+        verify(jsonContactDao, times(1)).findAllByUsername(username);
         assertNotNull(contacts);
         assertEquals(3, contacts.size());
 
@@ -61,7 +61,7 @@ public class JsonContactServiceImplTest {
         jsonContactService.findOne(any(Integer.class));
 
         //verify
-        verify(jsonContactDao, times(1));
+        verify(jsonContactDao, times(1)).findOne(any(Integer.class));
         assertNotNull(contact);
     }
 
@@ -86,6 +86,6 @@ public class JsonContactServiceImplTest {
         jsonContactService.save(any(Contact.class));
 
         //verify
-        verify(jsonContactDao, times(1));
+        verify(jsonContactDao, times(1)).save(any(Contact.class));
     }
 }

@@ -24,9 +24,7 @@ public class JsonUserDao {
             for (Object o : userMap.values()) {
                 if (o.toString().contains("=" + username + ",")) {
 
-                    String editedJsonString = o.toString().replace("=", "\" : \"")
-                            .replace("{", "{\"").replace("}", "\"}")
-                            .replace(",", "\" ,\"").replace(" ", "");
+                    String editedJsonString = correctString(o);
                     return mapper.readValue(editedJsonString, User.class);
                 }
             }
@@ -35,6 +33,7 @@ public class JsonUserDao {
         }
         return null;
     }
+
 
     public void save(User user) {
         try {
@@ -51,5 +50,11 @@ public class JsonUserDao {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String correctString(Object string) {
+        return string.toString().replace("=", "\" : \"")
+                .replace("{", "{\"").replace("}", "\"}")
+                .replace(",", "\" ,\"").replace(" ", "");
     }
 }

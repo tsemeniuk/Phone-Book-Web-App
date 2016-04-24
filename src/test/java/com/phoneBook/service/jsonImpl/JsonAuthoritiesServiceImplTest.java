@@ -36,6 +36,6 @@ public class JsonAuthoritiesServiceImplTest {
         jsonAuthoritiesService.save(authority);
 
         //verify
-        verify(jsonAuthoritiesDao, times(1));
+        verify(jsonAuthoritiesDao, times(1)).save(authority);
     }
 }

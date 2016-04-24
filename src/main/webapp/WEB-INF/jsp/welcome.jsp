@@ -10,54 +10,53 @@
 <head>
     <title>Home</title>
     <jsp:include page="header.jsp"/>
-    <%--<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>--%>
     <script src="/js/list.min.js"></script>
 
 </head>
 <body>
-<jsp:useBean id="random" class="java.util.Random" scope="application" />
+<jsp:useBean id="random" class="java.util.Random" scope="application"/>
 
 <div id="contacts" class="container">
     <div class="row">
-        <div class="col-xs-12 ">
+        <div unselectable="on" class="col-xs-12 unselectable">
+
             <input class="search" placeholder="Search"/>
             &nbsp;&nbsp;Сортировать по:&nbsp;&nbsp;
-            <span class="sort sort-button" data-sort="firstName">Имени</span>
-            <span class="sort sort-button" data-sort="secondName">Фамилии</span>
-            <span class="sort sort-button" data-sort="lastName">Фамилии</span>
-            <span class="sort sort-button" data-sort="phoneMobile">Моб. телефону</span>
-            <span class="sort sort-button" data-sort="phoneHome">Дом. телефону</span>
-            <span class="sort sort-button" data-sort="address">Адресу</span>
-            <span class="sort sort-button" data-sort="email">Email</span>
+            <span unselectable="on" class="sort sort-button unselectable" data-sort="firstName">Имени</span>
+            <span unselectable="on" class="sort sort-button unselectable" data-sort="secondName">Фамилии</span>
+            <span unselectable="on" class="sort sort-button unselectable" data-sort="lastName">Фамилии</span>
+            <span unselectable="on" class="sort sort-button unselectable" data-sort="phoneMobile">Моб. телефону</span>
+            <span unselectable="on" class="sort sort-button unselectable" data-sort="phoneHome">Дом. телефону</span>
+            <span unselectable="on" class="sort sort-button unselectable" data-sort="address">Адресу</span>
+            <span unselectable="on" class="sort sort-button unselectable" data-sort="email">Email</span>
             <br>
             <br>
             <br>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <button class="btn button" onclick="location.href='/add'">Добавить</button>
             <table class="table">
                 <tr>
-                <th>Фото</th>
-                <th class="hidden">id</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Отчество</th>
-                <th>Моб.телефон</th>
-                <th>Дом.телефон</th>
-                <th>Адрес</th>
-                <th>Email</th>
-                <th></th>
-                <th></th>
+                    <th>Фото</th>
+                    <th class="hidden">id</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Отчество</th>
+                    <th>Моб.телефон</th>
+                    <th>Дом.телефон</th>
+                    <th>Адрес</th>
+                    <th>Email</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 <tbody class="list">
                 <c:forEach items="${contacts}" var="contact" varStatus="loop">
-                   <c:set var="randomNumber" value="${random.nextInt(14)+1}"/>
+                    <c:set var="randomNumber" value="${random.nextInt(14)+1}"/>
                     <tr class="well">
-                        <td><img class="" src="/img/${randomNumber}.jpg" width="75px"height="75px"></td>
-                        <%--<td><img class="" src="/img/${contact.id}.jpg" width="75px"height="75px"></td>--%>
+                        <td><img class="" src="/img/${randomNumber}.jpg" width="75px" height="75px"></td>
+                            <%--<td><img class="" src="/img/${contact.id}.jpg" width="75px"height="75px"></td>--%>
                         <td class="hidden">${contact.id}</td>
                         <td class="firstName"><h5>${contact.firstName}</h5></td>
                         <td class="secondName"><h5>${contact.secondName}</h5></td>
@@ -72,7 +71,7 @@
                             </button>
                         </td>
                         <td>
-                            <button class="btn" id="delete-btn" onclick="deleteContact(${contact.id});" type="button" >
+                            <button class="btn" id="delete-btn" onclick="deleteContact(${contact.id});" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </td>
@@ -91,6 +90,11 @@
     #delete-btn {
         background-color: #ff6b6d;
         color: #f8f8f8;
+    }
+
+    .unselectable {
+        -moz-user-select: none;
+        -webkit-user-select: none;
     }
 </style>
 <script>

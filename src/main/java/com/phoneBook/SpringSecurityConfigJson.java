@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 public class SpringSecurityConfigJson extends WebSecurityConfigurerAdapter {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired(required = true)
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

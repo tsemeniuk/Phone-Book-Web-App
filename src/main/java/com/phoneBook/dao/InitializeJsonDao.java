@@ -11,15 +11,18 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Random;
 
 @Service
 public class InitializeJsonDao {
     public static void main(String[] args) throws IOException {
-        initializeJsonDataBase();
+        InitializeJsonDao initializeJsonDao = new InitializeJsonDao();
+        initializeJsonDao.initializeJsonDataBase();
     }
 
     @PostConstruct
-    public static void initializeJsonDataBase() throws IOException {
+    public void initializeJsonDataBase() throws IOException {
+        Random random = new Random();
         ObjectMapper mapper = new ObjectMapper();
         String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
 
@@ -45,8 +48,8 @@ public class InitializeJsonDao {
             contact.setFirstName("Юзер");
             contact.setSecondName("Юзерович");
             contact.setLastName("Юзеров");
-            contact.setPhoneMobile("(067) 171-19-18");
-            contact.setPhoneHome("(093) 371-99-5" + i);
+            contact.setPhoneMobile("(067) 171-" + (random.nextInt(89) + 10) + "-" + (random.nextInt(89) + 10));
+            contact.setPhoneHome("(093) 371-" + (random.nextInt(89) + 10) + "-" + (random.nextInt(89) + 10));
             contact.setAddress("UA");
             contact.setEmail("some@email.com");
             contact.setUsername("user");

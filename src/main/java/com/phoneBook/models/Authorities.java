@@ -56,4 +56,13 @@ public class Authorities implements Serializable,Comparable<Authorities> {
     public int compareTo(Authorities authorities) {
         return id > authorities.id ? 1 : id == authorities.id ? 0 : -1;
     }
+
+    @Override
+    public String toString() {
+        return "Authorities{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", authority='" + authority + '\'' +
+                '}';
+    }
 }

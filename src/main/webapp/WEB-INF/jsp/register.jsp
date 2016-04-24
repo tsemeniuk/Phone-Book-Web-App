@@ -21,7 +21,7 @@
         <form:errors path="username" cssStyle="color: #ff0000;"/>
 
         <form:input id="inputReg" path="password" class="form-control" data-toggle="tooltip"
-                    placeholder="Пароль" data-placement="right" title="Минимум 5 символов"/>
+                    placeholder="Пароль" data-placement="right" title="Минимум 5 символов" type="password"/>
         <form:errors path="password" cssStyle="color: #ff0000;"/>
 
         <form:input id="inputReg" path="firstName" class="form-control" data-toggle="tooltip"

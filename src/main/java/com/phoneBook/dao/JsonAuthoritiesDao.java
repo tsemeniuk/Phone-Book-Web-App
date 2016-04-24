@@ -3,7 +3,6 @@ package com.phoneBook.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoneBook.models.Authorities;
-import com.phoneBook.models.User;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 
@@ -14,30 +13,19 @@ import java.util.HashMap;
 @Service
 public class JsonAuthoritiesDao {
 
-    public static void main(String[] args) {
-        Authorities authorities = new Authorities();
-        authorities.setUsername("TEST USER NAME");
-        authorities.setAuthority("ROLE_USER");
-        JsonAuthoritiesDao jsonAuthoritiesDao = new JsonAuthoritiesDao();
-        jsonAuthoritiesDao.save(authorities);
-
-
-    }
-    public User findByUsername(String username) {
+    public Authorities findByUsername(String username) {
         try {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(str, JsonDbTable.class);
             ObjectMapper mapper = new ObjectMapper();
 
-            HashMap userMap = root.get("authorities");
+            HashMap userMap = root.get("authority");
 
             for (Object o : userMap.values()) {
                 if (o.toString().contains("=" + username + ",")) {
 
-                    String editedJsonString = o.toString().replace("=", "\" : \"")
-                            .replace("{", "{\"").replace("}", "\"}")
-                            .replace(",", "\" ,\"").replace(" ", "");
-                    return mapper.readValue(editedJsonString, User.class);
+                    String editedJsonString = correctString(o);
+                    return mapper.readValue(editedJsonString, Authorities.class);
                 }
             }
         } catch (IOException e) {
@@ -61,5 +49,10 @@ public class JsonAuthoritiesDao {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public  String correctString(Object string) {
+        return string.toString().replace("=", "\" : \"")
+                .replace("{", "{\"").replace("}", "\"}")
+                .replace(",", "\" ,\"").replace(" ", "");
     }
 }

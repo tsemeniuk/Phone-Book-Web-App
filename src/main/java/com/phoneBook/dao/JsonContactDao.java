@@ -12,6 +12,12 @@ import java.util.*;
 @Service
 public class JsonContactDao {
 
+
+    public static void main(String[] args) {
+        JsonContactDao jsonContactDao = new JsonContactDao();
+        jsonContactDao.findAllByUsername("user");
+    }
+
     public List<Contact> findAllByUsername(String userName) {
         List list = new ArrayList();
         try {
@@ -24,9 +30,8 @@ public class JsonContactDao {
             for (Object o : contactMap.values()) {
                 if (o.toString().contains("=" + userName)) {
 
-                    String editedJsonString = o.toString().replace("=", "\" : \"")
-                            .replace("{", "{\"").replace("}", "\"}")
-                            .replace(",", "\" ,\"").replace(" ", "");
+                    String editedJsonString = correctString(o);
+                    System.out.println(editedJsonString);
                     Contact contact = mapper.readValue(editedJsonString, Contact.class);
                     list.add(contact);
                 }
@@ -39,7 +44,7 @@ public class JsonContactDao {
         return list;
     }
 
-    public  Contact findOne(int contactId) {
+    public Contact findOne(int contactId) {
         try {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(str, JsonDbTable.class);
@@ -50,9 +55,7 @@ public class JsonContactDao {
             for (Object o : contactMap.values()) {
                 if (o.toString().contains("=" + contactId + ",")) {
 
-                    String editedJsonString = o.toString().replace("=", "\" : \"")
-                            .replace("{", "{\"").replace("}", "\"}")
-                            .replace(",", "\" ,\"").replace(" ", "");
+                    String editedJsonString = correctString(o);
                     return mapper.readValue(editedJsonString, Contact.class);
                 }
             }
@@ -62,7 +65,7 @@ public class JsonContactDao {
         return null;
     }
 
-    public  void delete(int contactId) {
+    public void delete(int contactId) {
         try {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(str, JsonDbTable.class);
@@ -85,16 +88,14 @@ public class JsonContactDao {
         }
     }
 
-    private  HashMap rebuildMap(HashMap contactMap, ObjectMapper mapper) throws IOException {
+    private HashMap rebuildMap(HashMap contactMap, ObjectMapper mapper) throws IOException {
         HashMap newMap = new HashMap();
         ArrayList list = new ArrayList(contactMap.values());
 
         for (int i = 0; i < list.size(); i++) {
             String jsonStringObject = list.get(i).toString();
 
-            String editedJsonString = jsonStringObject.replace("=", "\" : \"")
-                    .replace("{", "{\"").replace("}", "\"}")
-                    .replace(",", "\" ,\"").replace(" ", "");
+            String editedJsonString = correctString(jsonStringObject);
             Contact contact = mapper.readValue(editedJsonString, Contact.class);
             contact.setId(i + 1);
             newMap.put(i + 1, contact);
@@ -102,7 +103,7 @@ public class JsonContactDao {
         return newMap;
     }
 
-    public  void save(Contact contact) {
+    public void save(Contact contact) {
         try {
             String jsonFile = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(jsonFile, JsonDbTable.class);
@@ -124,5 +125,11 @@ public class JsonContactDao {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String correctString(Object string) {
+        return string.toString().replace("=", "\" : \"")
+                .replace("{", "{\"").replace("}", "\"}")
+                .replace(",", "\" ,\"").replace(" ", "");
     }
 }

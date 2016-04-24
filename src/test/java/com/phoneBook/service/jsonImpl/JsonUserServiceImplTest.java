@@ -27,13 +27,16 @@ public class JsonUserServiceImplTest {
     @Test
     public void testSave() throws Exception {
         //prepare
-        User mockUser = mock(User.class);
+        User user = new User();
 
         //when
-        doNothing().when(jsonUserDao).save(mockUser);
+        doNothing().when(jsonUserDao).save(user);
+
+        //then
+        jsonUserService.save(user);
 
         //verify
-        verify(jsonUserDao, times(1));
+        verify(jsonUserDao, times(1)).save(user);
     }
 
     @Test
