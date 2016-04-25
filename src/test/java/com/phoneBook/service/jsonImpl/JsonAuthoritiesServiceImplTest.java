@@ -8,9 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 public class JsonAuthoritiesServiceImplTest {
@@ -24,13 +22,13 @@ public class JsonAuthoritiesServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void testSave() throws Exception {
         //prepare
         Authorities authority = new Authorities();
 
         //when
-        doNothing().when(jsonAuthoritiesDao).save(authority);
+        doThrow(new Exception()).when(jsonAuthoritiesDao).save(authority);
 
         //then
         jsonAuthoritiesService.save(authority);
