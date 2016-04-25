@@ -1,4 +1,4 @@
-package com.phoneBook.dao;
+package com.phoneBook.dao.util;
 
 import com.phoneBook.models.Authorities;
 import com.phoneBook.models.Contact;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 
 @Service
-public class JsonDbTable extends HashMap<String, HashMap> {
+public class JsonDbTable {
     private HashMap<String, User> user;
     private HashMap<String, Contact> contact;
     private HashMap<String, Authorities> authority;

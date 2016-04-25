@@ -2,7 +2,7 @@ package com.phoneBook.dao;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.phoneBook.dao.util.StringCorrector;
+import com.phoneBook.dao.util.JsonDbTable;
 import com.phoneBook.dao.util.ValidateDb;
 import com.phoneBook.models.User;
 import org.apache.commons.io.FileUtils;
@@ -20,23 +20,17 @@ public class JsonUserDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonUserDao.class);
     @Autowired
     private ValidateDb validateDb;
-    @Autowired
-    StringCorrector stringCorrector;
 
     public User findByUsername(String username) {
         validateDb.validate();
         try {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(str, JsonDbTable.class);
-            ObjectMapper mapper = new ObjectMapper();
+            HashMap<String, User> userMap = root.getUser();
 
-            HashMap userMap = root.get("user");
-
-            for (Object o : userMap.values()) {
-                if (o.toString().contains("=" + username + ",")) {
-
-                    String editedJsonString = stringCorrector.correctString(o);
-                    return mapper.readValue(editedJsonString, User.class);
+            for (User user : userMap.values()) {
+                if (user.getUsername().equals(username)) {
+                    return user;
                 }
             }
         } catch (IOException e) {
@@ -52,9 +46,9 @@ public class JsonUserDao {
             JsonDbTable root = new ObjectMapper().readValue(jsonFile, JsonDbTable.class);
             ObjectMapper mapper = new ObjectMapper();
 
-            HashMap userMap = root.get("user");
+            HashMap<String, User> userMap = root.getUser();
             user.setId(userMap.size() + 1);
-            userMap.put(userMap.size() + 1, user);
+            userMap.put(String.valueOf(userMap.size() + 1), user);
 
             jsonFile = mapper.writeValueAsString(root);
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);

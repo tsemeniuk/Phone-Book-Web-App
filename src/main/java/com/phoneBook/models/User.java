@@ -164,13 +164,14 @@ public class User implements UserDetails, Serializable, Comparable<User> {
 
     @Override
     public String toString() {
-        return "{" +
+        return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", enabled=" + enabled +
                 '}';
     }
 }

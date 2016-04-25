@@ -1,5 +1,6 @@
 package com.phoneBook.dao;
 
+import com.phoneBook.dao.util.InitializeJsonDao;
 import org.junit.Before;
 import org.junit.Test;
 

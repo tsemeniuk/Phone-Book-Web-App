@@ -1,6 +1,5 @@
 package com.phoneBook.dao.util;
 
-import com.phoneBook.dao.InitializeJsonDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

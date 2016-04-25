@@ -1,12 +1,11 @@
 package com.phoneBook.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.phoneBook.dao.util.StringCorrector;
+import com.phoneBook.dao.util.JsonDbTable;
 import com.phoneBook.models.Contact;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -16,22 +15,18 @@ import java.util.*;
 @Service
 public class JsonContactDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonContactDao.class);
-    @Autowired
-    StringCorrector stringCorrector;
 
     public List<Contact> findAllByUsername(String userName) {
-        List list = new ArrayList();
+        List<Contact> list = new ArrayList<>();
         try {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             ObjectMapper mapper = new ObjectMapper();
             JsonDbTable root = mapper.readValue(str, JsonDbTable.class);
 
-            HashMap contactMap = root.get("contact");
+            HashMap<String,Contact> contactMap = root.getContact();
 
-            for (Object o : contactMap.values()) {
-                if (o.toString().contains("=" + userName)) {
-                    String editedJsonString = stringCorrector.correctString(o);
-                    Contact contact = mapper.readValue(editedJsonString, Contact.class);
+            for (Contact contact : contactMap.values()) {
+                if (contact.getUsername().equals(userName)) {
                     list.add(contact);
                 }
             }
@@ -41,20 +36,17 @@ public class JsonContactDao {
         Collections.sort(list);
         return list;
     }
-
     public Contact findOne(int contactId) {
         try {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(str, JsonDbTable.class);
             ObjectMapper mapper = new ObjectMapper();
 
-            HashMap contactMap = root.get("contact");
+            HashMap<String,Contact> contactMap = root.getContact();
 
-            for (Object o : contactMap.values()) {
-                if (o.toString().contains("=" + contactId + ",")) {
-
-                    String editedJsonString = stringCorrector.correctString(o);
-                    return mapper.readValue(editedJsonString, Contact.class);
+            for (Contact contact : contactMap.values()) {
+                if (contact.getId().equals(contactId)) {
+                    return contact;
                 }
             }
         } catch (IOException e) {
@@ -68,16 +60,18 @@ public class JsonContactDao {
             String str = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(str, JsonDbTable.class);
             ObjectMapper mapper = new ObjectMapper();
-            HashMap contactMap = root.get("contact");
+            HashMap<String,Contact> contactMap = root.getContact();
 
             Iterator it = contactMap.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                if (pair.getValue().toString().contains("=" + contactId + ",")) {
+                Contact contact = (Contact) pair.getValue();
+                if (contact.getId().equals(contactId)) {
 
                     it.remove(); // avoids a ConcurrentModificationException
-                    contactMap = rebuildMap(contactMap, mapper);
-                    root.replace("contact", contactMap);
+                    contactMap = rebuildMap(contactMap);
+                    root.setContact(contactMap);
+
                     mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);
                     LOGGER.info("Контакт был удален успешно.");
                 }
@@ -87,16 +81,14 @@ public class JsonContactDao {
         }
     }
 
-    private HashMap rebuildMap(HashMap contactMap, ObjectMapper mapper) throws IOException {
-        HashMap newMap = new HashMap();
-        ArrayList list = new ArrayList(contactMap.values());
+    private HashMap<String,Contact> rebuildMap(HashMap<String,Contact> contactMap) throws IOException {
+        HashMap<String,Contact> newMap = new HashMap<>();
+        ArrayList<Contact> list = new ArrayList<>(contactMap.values());
 
         for (int i = 0; i < list.size(); i++) {
-
-            String editedJsonString = stringCorrector.correctString(list.get(i).toString());
-            Contact contact = mapper.readValue(editedJsonString, Contact.class);
+            Contact contact = list.get(i);
             contact.setId(i + 1);
-            newMap.put(i + 1, contact);
+            newMap.put(String.valueOf(i + 1), contact);
         }
         return newMap;
     }
@@ -106,14 +98,14 @@ public class JsonContactDao {
             String jsonFile = FileUtils.readFileToString(new File("jsonDataBase.json"));
             JsonDbTable root = new ObjectMapper().readValue(jsonFile, JsonDbTable.class);
             ObjectMapper mapper = new ObjectMapper();
-            HashMap contactMap = root.get("contact");
+            HashMap<String,Contact> contactMap = root.getContact();
 
             if (contact.getId() == null) {
                 contact.setId(contactMap.size() + 1);
-                contactMap.put(contact.getId(), contact);
+                contactMap.put(String.valueOf(contact.getId()), contact);
 
             } else {
-                contactMap.put(contact.getId(), contact);
+                contactMap.put(String.valueOf(contact.getId()), contact);
             }
             jsonFile = mapper.writeValueAsString(root);
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File("jsonDataBase.json"), root);

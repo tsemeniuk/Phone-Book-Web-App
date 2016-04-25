@@ -156,6 +156,7 @@ public class Contact implements Serializable, Comparable<Contact> {
                 ", phoneHome='" + phoneHome + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 

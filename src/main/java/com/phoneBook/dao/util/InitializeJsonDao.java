@@ -1,4 +1,4 @@
-package com.phoneBook.dao;
+package com.phoneBook.dao.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoneBook.models.Authorities;
@@ -26,9 +26,9 @@ public class InitializeJsonDao {
         ObjectMapper mapper = new ObjectMapper();
 
         JsonDbTable root = new JsonDbTable();
-        root.put("user", new HashMap());
-        root.put("contact", new HashMap());
-        root.put("authority", new HashMap());
+        root.setUser( new HashMap<String, User>());
+        root.setContact( new HashMap<String, Contact>());
+        root.setAuthority( new HashMap<String, Authorities>());
 
         for (int i = 1; i < 2; i++) {
             User user = new User();
@@ -39,7 +39,7 @@ public class InitializeJsonDao {
             user.setSecondName("Юзеров");
             user.setLastName("Юзерович");
             user.setEnabled(true);
-            root.get("user").put(i, user);
+            root.getUser().put(String.valueOf(i), user);
         }
         for (int i = 1; i < 11; i++) {
             Contact contact = new Contact();
@@ -53,14 +53,14 @@ public class InitializeJsonDao {
             contact.setAddress("UA");
             contact.setEmail("some@email.com");
             contact.setUsername("user");
-            root.get("contact").put(i, contact);
+            root.getContact().put(String.valueOf(i), contact);
         }
         for (int i = 1; i < 2; i++) {
             Authorities authority = new Authorities();
             authority.setId(i);
             authority.setUsername("user");
             authority.setAuthority("ROLE_USER");
-            root.get("authority").put(i, authority);
+            root.getAuthority().put(String.valueOf(i), authority);
         }
 
         try {
